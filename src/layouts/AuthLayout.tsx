@@ -2,7 +2,7 @@ import { Outlet, Link } from 'react-router-dom'
 import { ArrowLeft, Sun, Moon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTheme } from '@/hooks'
-import loginArt from '@/assets/rexa-login-panel-clean.png'
+import { AuthVisualPanel } from '@/components/common/AuthVisualPanel'
 
 export function AuthLayout() {
   const { theme, setTheme } = useTheme()
@@ -43,39 +43,8 @@ export function AuthLayout() {
             LEFT — RExA VISUAL PANEL
            ===================================================== */}
 
-        <section
-          className="
-            relative
-            hidden
-            min-h-svh
-            overflow-hidden
-            lg:block
-          "
-        >
-          <img
-            src={loginArt}
-            alt="RExA reasoning analysis"
-            className="
-              absolute
-              inset-0
-              h-full
-              w-full
-              object-cover
-              object-center
-            "
-          />
-
-          {/* Dark-theme atmosphere */}
-          <div
-            className="
-              pointer-events-none
-              absolute
-              inset-0
-              bg-[#032C25]/10
-              dark:bg-[#021F1A]/20
-            "
-          />
-
+        <section className="relative hidden min-h-svh overflow-hidden lg:block">
+          <AuthVisualPanel />
           {/* Bottom copyright */}
           <p
             className="

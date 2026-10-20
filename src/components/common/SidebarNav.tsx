@@ -33,7 +33,7 @@ export function SidebarNav({
                   {group.label}
                 </p>
               )}
-              <ul className="flex flex-col gap-1">
+              <ul className="flex flex-col gap-1.5">
                 {group.items.map((item) => {
                   const link = (
                     <NavLink
@@ -42,24 +42,41 @@ export function SidebarNav({
                       onClick={onNavigate}
                       className={({ isActive }) =>
                         cn(
-                          'flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-medium transition-all',
-                          'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+                          'group relative flex min-h-11 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sidebar-ring',
                           isActive
-                            ? 'bg-sidebar-accent text-sidebar-primary'
-                            : 'text-sidebar-foreground/65',
+                            ? 'bg-sidebar-accent text-sidebar-foreground shadow-sm ring-1 ring-sidebar-primary/15'
+                            : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/75 hover:text-sidebar-accent-foreground',
                           item.disabled && 'pointer-events-none opacity-50',
                           collapsed && 'justify-center px-2',
                         )
                       }
                     >
-                      <item.icon className="h-4 w-4 shrink-0" />
-                      {!collapsed && (
+                      {({ isActive }) => (
                         <>
-                          <span className="flex-1 truncate">{item.title}</span>
-                          {item.badge && (
-                            <Badge variant="secondary" className="ml-auto text-xs">
-                              {item.badge}
-                            </Badge>
+                          {isActive && (
+                            <span
+                              aria-hidden="true"
+                              className="absolute inset-y-2 left-0 w-1 rounded-r-full bg-sidebar-primary"
+                            />
+                          )}
+                          <item.icon
+                            className={cn(
+                              'h-[18px] w-[18px] shrink-0 transition-colors',
+                              isActive
+                                ? 'text-sidebar-primary'
+                                : 'text-current group-hover:text-sidebar-primary',
+                            )}
+                            aria-hidden="true"
+                          />
+                          {!collapsed && (
+                            <>
+                              <span className="flex-1 truncate">{item.title}</span>
+                              {item.badge && (
+                                <Badge variant="secondary" className="ml-auto text-xs">
+                                  {item.badge}
+                                </Badge>
+                              )}
+                            </>
                           )}
                         </>
                       )}

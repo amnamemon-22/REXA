@@ -395,28 +395,33 @@ function ReasoningDepth({ analyses }: { analyses: AnalysisResult[] }) {
               >
                 <CartesianGrid
                   vertical={false}
-                  stroke="hsl(var(--border))"
+                  stroke="var(--border)"
                   strokeDasharray="3 5"
                 />
                 <XAxis
                   dataKey="level"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 11, fill: 'hsl(var(--muted-foreground))' }}
+                  tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }}
                 />
                 <YAxis
                   width={25}
                   allowDecimals={false}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                  tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
                 />
-                <Tooltip content={<ChartTooltip />} />
+                <Tooltip
+                  cursor={false}
+                  content={<ChartTooltip />}
+                  labelFormatter={(level) => `Reasoning depth ${level}`}
+                />
                 <Bar
                   dataKey="count"
                   name="Analyses"
                   radius={[5, 5, 0, 0]}
                   maxBarSize={34}
+                  activeBar={{ fill: 'var(--sidebar-primary)' }}
                 >
                   {data.map((item) => (
                     <Cell key={item.level} fill={item.fill} />
@@ -722,7 +727,7 @@ export function DashboardPage() {
     <div className="min-h-full bg-background text-foreground">
       <main className="mx-auto w-full max-w-[1500px] space-y-5 px-4 py-5 sm:px-6 sm:py-6 xl:px-8">
         {/* Compact welcome header: the data remains the focus. */}
-        <header className="relative overflow-hidden rounded-2xl bg-[#103D2F] px-5 py-5 text-white sm:px-7 sm:py-6">
+        <header className="relative overflow-hidden rounded-2xl bg-sidebar px-5 py-5 text-white sm:px-7 sm:py-6">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full border border-white/[0.09]"
@@ -747,7 +752,7 @@ export function DashboardPage() {
 
             <Button
               asChild
-              className="h-10 shrink-0 rounded-xl bg-[#C3EBD2] px-4 font-semibold text-[#103D2F] shadow-none hover:bg-white"
+              className="h-10 shrink-0 rounded-xl bg-[#C3EBD2] px-4 font-semibold text-sidebar shadow-none hover:bg-white"
             >
               <Link to={student ? ROUTES.APP.PRACTICE : ROUTES.APP.ANALYSIS}>
                 <FileText className="mr-2 h-4 w-4" />

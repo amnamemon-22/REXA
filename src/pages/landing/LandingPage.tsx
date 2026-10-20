@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   ArrowRight,
@@ -16,6 +15,8 @@ import {
 } from 'lucide-react'
 import { ROUTES } from '@/routes/paths'
 import { Button } from '@/components/ui/button'
+import { SplashLink } from '@/components/common/SplashTransition'
+import { RexaLogoArtwork } from '@/components/common/Logo'
 
 export function LandingPage() {
   return (
@@ -74,12 +75,13 @@ export function LandingPage() {
       </div>
 
       {/* Main heading */}
-      <h1 className="mt-5 max-w-[520px] font-serif text-[58px] font-semibold leading-[0.91] tracking-[-0.045em] text-[#102D3D] dark:text-white sm:text-[68px] lg:text-[72px] xl:text-[78px]">
-        Make
-        <br />
-        Reasoning
-        <br />
-        <span className="text-[#17644F] dark:text-[#7AC7A8]">Visible.</span>
+      <h1 className="mt-5 max-w-[560px] text-[#102D3D] dark:text-white">
+        <span className="block font-serif text-[58px] font-semibold leading-[0.91] tracking-[-0.045em] text-[#17644F] dark:text-[#7AC7A8] sm:text-[68px] lg:text-[72px] xl:text-[78px]">
+          REXA
+        </span>
+        <span className="mt-4 block max-w-[550px] text-[22px] font-semibold leading-[1.2] tracking-[-0.035em] sm:text-[25px] lg:text-[28px]">
+          Explainable Reasoning Analysis of Descriptive Answers (REXA)
+        </span>
       </h1>
 
       {/* Description */}
@@ -96,10 +98,10 @@ export function LandingPage() {
           className="h-11 rounded-lg border-0 bg-[#075B45] px-5 text-sm font-semibold text-white shadow-sm hover:bg-[#064D3B]"
           asChild
         >
-          <Link to={ROUTES.AUTH.LOGIN}>
+          <SplashLink to={ROUTES.AUTH.LOGIN}>
             Get started
             <ArrowRight className="ml-1 h-4 w-4" />
-          </Link>
+          </SplashLink>
         </Button>
 
         <a
@@ -884,10 +886,10 @@ export function LandingPage() {
         asChild
         className="h-9 rounded-md bg-white px-4 text-[9px] font-semibold text-[#075B45] shadow-sm hover:bg-[#F2F8F5]"
       >
-        <Link to={ROUTES.AUTH.REGISTER}>
+        <SplashLink to={ROUTES.AUTH.REGISTER}>
           Get started
           <ArrowRight className="ml-1 h-3 w-3" />
-        </Link>
+        </SplashLink>
       </Button>
 
       <Button
@@ -895,9 +897,9 @@ export function LandingPage() {
         variant="outline"
         className="h-9 rounded-md border-white/40 bg-transparent px-5 text-[9px] font-semibold text-white hover:bg-white/10"
       >
-        <Link to={ROUTES.AUTH.LOGIN}>
+        <SplashLink to={ROUTES.AUTH.LOGIN}>
           Sign in
-        </Link>
+        </SplashLink>
       </Button>
     </motion.div>
   </div>
@@ -909,23 +911,7 @@ export function LandingPage() {
 <footer className="border-t border-[#DCE8E1] bg-[#F7FAF7] dark:border-white/10 dark:bg-[#102D27]">
   <div className="mx-auto flex h-[58px] max-w-[1400px] items-center justify-between px-8 sm:px-10 lg:px-12">
     {/* Brand */}
-    <div className="flex items-center gap-2">
-      <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#075B45] text-white">
-        <span className="font-serif text-[16px] font-bold">
-          R
-        </span>
-      </div>
-
-      <div className="leading-none">
-        <p className="font-serif text-[15px] font-semibold tracking-tight text-[#102D3D] dark:text-white">
-          RExA
-        </p>
-
-        <p className="mt-0.5 text-[5px] font-semibold uppercase tracking-[0.22em]text-[#286A56] dark:text-[#7AC7A8]">
-          Reasoning Analysis
-        </p>
-      </div>
-    </div>
+    <RexaLogoArtwork className="h-8 text-[11px]" />
 
     {/* Footer links */}
     <div className="flex items-center gap-6 text-[7px] text-[#64766D] dark:text-[#B6C8C1]">

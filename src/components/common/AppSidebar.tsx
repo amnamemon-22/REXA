@@ -31,7 +31,7 @@ export function AppSidebar({ collapsed = false, onToggle, onNavigate, className 
       )}
     >
       <div className={cn('flex h-[76px] items-center border-b border-sidebar-border px-5', collapsed ? 'justify-center px-2' : 'justify-between')}>
-        <Logo collapsed={collapsed} showText={!collapsed} />
+        <Logo collapsed={collapsed} showText={!collapsed} transitionOnNavigate tone="dark" />
         {onToggle && !collapsed && (
           <Button variant="ghost" size="icon" className="h-8 w-8 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-white" onClick={onToggle} aria-label="Collapse sidebar">
             <PanelLeftClose className="h-4 w-4" />

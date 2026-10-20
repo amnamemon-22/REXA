@@ -1,5 +1,4 @@
 import { Menu, PanelTop } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { navbarLinks } from '@/routes/navigation'
 import { ROUTES } from '@/routes/paths'
@@ -7,6 +6,7 @@ import { Logo } from './Logo'
 import { ThemeToggle } from './ThemeToggle'
 import { UserMenu } from './UserMenu'
 import { Button } from '@/components/ui/button'
+import { SplashLink } from './SplashTransition'
 
 interface AppNavbarProps {
   variant?: 'marketing' | 'app'
@@ -60,7 +60,7 @@ export function AppNavbar({
 
             {onMenuClick && (
               <div className="sm:hidden">
-                <Logo />
+                <Logo transitionOnNavigate />
               </div>
             )}
           </div>
@@ -115,11 +115,11 @@ export function AppNavbar({
           <ThemeToggle />
 
           <Button size="sm" variant="ghost" asChild>
-            <Link to={ROUTES.AUTH.REGISTER}>Sign up</Link>
+            <SplashLink to={ROUTES.AUTH.REGISTER}>Sign up</SplashLink>
           </Button>
 
           <Button size="sm" asChild>
-            <Link to={ROUTES.AUTH.LOGIN}>Sign in</Link>
+            <SplashLink to={ROUTES.AUTH.LOGIN}>Sign in</SplashLink>
           </Button>
         </div>
       </div>

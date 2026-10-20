@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { BookOpen, Loader2, Pencil, Plus, Trash2 } from 'lucide-react'
+import { BookOpen, Loader2, Pencil, Plus, Search, Trash2 } from 'lucide-react'
 import type { Question } from '@/types'
 import { questionsService } from '@/services'
 import { EmptyState, FormField, LoadingSpinner, PageHeader } from '@/components/common'
@@ -217,41 +217,49 @@ export function QuestionsPage() {
           </Alert>
         )}
 
-        <div className="grid gap-2 sm:grid-cols-3">
-          <Input
-            placeholder="Search questions…"
-            value={search}
-            onChange={(event) => {
-              setSearch(event.target.value)
-              setPage(1)
-            }}
-            aria-label="Search questions"
-          />
-          <Select
-            value={difficultyFilter}
-            onChange={(event) => {
-              setDifficultyFilter(event.target.value as typeof difficultyFilter)
-              setPage(1)
-            }}
-            aria-label="Filter by difficulty"
-          >
-            <option value="all">All difficulties</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </Select>
-          <Select
-            value={sortBy}
-            onChange={(event) => setSortBy(event.target.value as typeof sortBy)}
-            aria-label="Sort questions"
-          >
-            <option value="newest">Newest</option>
-            <option value="az">A–Z</option>
-            <option value="difficulty">Difficulty</option>
-          </Select>
-        </div>
+        <Card className="border-border/80 bg-card shadow-sm">
+          <CardContent className="grid gap-3 p-3 sm:grid-cols-[minmax(0,1.35fr)_minmax(180px,1fr)_minmax(160px,1fr)] sm:p-4">
+            <div className="relative">
+              <Search aria-hidden="true" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search questions…"
+                value={search}
+                onChange={(event) => {
+                  setSearch(event.target.value)
+                  setPage(1)
+                }}
+                aria-label="Search questions"
+                className="h-11 pl-9"
+              />
+            </div>
+            <Select
+              value={difficultyFilter}
+              onChange={(event) => {
+                setDifficultyFilter(event.target.value as typeof difficultyFilter)
+                setPage(1)
+              }}
+              aria-label="Filter by difficulty"
+              className="h-11"
+            >
+              <option value="all">All difficulties</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </Select>
+            <Select
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value as typeof sortBy)}
+              aria-label="Sort questions"
+              className="h-11"
+            >
+              <option value="newest">Newest</option>
+              <option value="az">A–Z</option>
+              <option value="difficulty">Difficulty</option>
+            </Select>
+          </CardContent>
+        </Card>
 
-        <Card>
+        <Card className="overflow-hidden border-border/80 shadow-sm">
           <CardContent className="p-0">
             {isLoading ? (
               <div className="flex justify-center py-16">
@@ -267,22 +275,22 @@ export function QuestionsPage() {
               />
             ) : (
               <Table>
-                <TableHeader>
+                <TableHeader className="bg-muted/45">
                   <TableRow>
-                    <TableHead>Question</TableHead>
-                    <TableHead>Subject</TableHead>
-                    <TableHead>Difficulty</TableHead>
-                    <TableHead>Concepts</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead className="min-w-[320px] py-3.5">Question</TableHead>
+                    <TableHead className="min-w-[150px] py-3.5">Subject</TableHead>
+                    <TableHead className="min-w-[125px] py-3.5">Difficulty</TableHead>
+                    <TableHead className="min-w-[120px] py-3.5">Concepts</TableHead>
+                    <TableHead className="min-w-[110px] py-3.5 text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {pagedQuestions.map((question) => (
-                    <TableRow key={question.id}>
-                      <TableCell className="max-w-sm font-medium">
+                    <TableRow key={question.id} className="group">
+                      <TableCell className="max-w-[440px] py-4 font-medium leading-6">
                         <button
                           type="button"
-                          className="line-clamp-2 text-left hover:underline"
+                          className="line-clamp-2 rounded-sm text-left transition-colors hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                           title={question.text}
                           onClick={() => setPreviewQuestion(question)}
                         >
@@ -297,7 +305,11 @@ export function QuestionsPage() {
                           variant={
                             DIFFICULTY_VARIANT[question.difficulty ?? 'medium']
                           }
-                          className="capitalize"
+                          className={question.difficulty === 'hard'
+                            ? 'rounded-full border-rose-200 bg-rose-50 px-2.5 py-0.5 text-[11px] font-semibold text-rose-800 capitalize hover:bg-rose-100 dark:border-rose-900/70 dark:bg-rose-950/35 dark:text-rose-200 dark:hover:bg-rose-950/55'
+                            : question.difficulty === 'easy'
+                              ? 'rounded-full border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 capitalize hover:bg-emerald-100 dark:border-emerald-900/70 dark:bg-emerald-950/35 dark:text-emerald-200 dark:hover:bg-emerald-950/55'
+                              : 'rounded-full border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-900 capitalize hover:bg-amber-100 dark:border-amber-900/70 dark:bg-amber-950/35 dark:text-amber-200 dark:hover:bg-amber-950/55'}
                         >
                           {question.difficulty ?? 'medium'}
                         </Badge>
@@ -311,7 +323,9 @@ export function QuestionsPage() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            aria-label="Edit question"
+                            aria-label={`Edit question: ${question.text}`}
+                            title="Edit question"
+                            className="h-9 w-9 rounded-lg text-muted-foreground hover:text-foreground"
                             onClick={() => openEditDialog(question)}
                           >
                             <Pencil className="h-4 w-4" />
@@ -319,7 +333,9 @@ export function QuestionsPage() {
                           <Button
                             variant="ghost"
                             size="icon"
-                            aria-label="Delete question"
+                            aria-label={`Delete question: ${question.text}`}
+                            title="Delete question"
+                            className="h-9 w-9 rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                             onClick={() => setDeletingQuestion(question)}
                           >
                             <Trash2 className="h-4 w-4 text-destructive" />
@@ -335,7 +351,7 @@ export function QuestionsPage() {
         </Card>
 
         {!isLoading && filteredQuestions.length > 0 && (
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between">
             <p className="text-muted-foreground">
               {filteredQuestions.length} question
               {filteredQuestions.length === 1 ? '' : 's'} · page {page} of {totalPages}

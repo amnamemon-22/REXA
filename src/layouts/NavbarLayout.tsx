@@ -16,13 +16,6 @@ export function NavbarLayout() {
         <Outlet />
       </motion.main>
 
-      <footer className="border-t py-6">
-        <div className="mx-auto max-w-7xl px-4 text-center text-sm text-muted-foreground sm:px-6 lg:px-8">
-          © {new Date().getFullYear()} RExA — Explainable Reasoning Analysis of
-          Descriptive Answers
-          Analysis System
-        </div>
-      </footer>
     </div>
   )
 }

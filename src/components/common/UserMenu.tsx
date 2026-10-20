@@ -6,6 +6,7 @@ import { roleLabel } from '@/lib/roles'
 import { ROUTES } from '@/routes/paths'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { useSplashTransition } from './SplashNavigationContext'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +18,7 @@ import {
 
 export function UserMenu() {
   const { user, logout } = useAuth()
+  const navigateWithSplash = useSplashTransition()
 
   if (!user) return null
 
@@ -63,7 +65,11 @@ export function UserMenu() {
         <DropdownMenuItem
           onClick={() => {
             logout()
-            window.location.href = ROUTES.AUTH.LOGIN
+            if (navigateWithSplash) {
+              navigateWithSplash(ROUTES.AUTH.LOGIN, { replace: true })
+            } else {
+              window.location.href = ROUTES.AUTH.LOGIN
+            }
           }}
         >
           <LogOut className="mr-2 h-4 w-4" />
